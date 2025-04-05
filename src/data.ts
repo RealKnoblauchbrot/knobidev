@@ -13,11 +13,6 @@ export interface Project {
   id?: string; // URL-friendly ID for the project
 }
 
-// Helper function to generate URL-friendly IDs from project titles
-export function getProjectId(title: string): string {
-  return title.toLowerCase().replace(/\s+/g, '-');
-}
-
 // Helper function to check if a URL is a GitHub URL
 export function isGitHubUrl(url: string): boolean {
   return url.includes('github.com') && !!extractRepoInfoFromUrl(url);
@@ -110,9 +105,6 @@ export async function getEnhancedProjects(): Promise<Project[]> {
   const enhancedProjects = await Promise.all(
     siteConfig.projects.items.map(async (project) => {
       // Generate project ID for URL if not present
-      if (!project.id) {
-        project.id = getProjectId(project.title);
-      }
 
       // Only fetch GitHub data if there's a GitHub link
       if (project.link && isGitHubUrl(project.link)) {

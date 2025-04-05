@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { siteConfig, getProjectId } from '@data';
+import { siteConfig } from '@data';
 
 interface NavbarProps {
   activeSection: string;
