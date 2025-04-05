@@ -6,6 +6,7 @@
   --secondary-text: #a0a0a0; /* Slightly darker text for secondary elements */
   --border-color: #2a2a2a; /* Dark border color */
   --section-padding: 80px 20px;
+  --scrollbar-width: 10px;
 }
 
 * {
@@ -21,6 +22,25 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  z-index: 2000;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #e0c995;
 }
 
 body {
@@ -42,7 +62,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  width: 100%;
+  width: calc(100% - var(--scrollbar-width)); /* Account for scrollbar width */
   position: fixed;
   top: 0;
   left: 0;
@@ -99,6 +119,61 @@ body {
 .nav-links a.active {
   color: var(--primary-color);
   font-weight: 700;
+}
+
+/* Dropdown styling */
+.nav-links .dropdown {
+  position: relative;
+}
+
+.dropdown-arrow {
+  margin-left: 5px;
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  min-width: 180px;
+  z-index: 1200;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li {
+  display: block;
+  width: 100%;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: rgba(212, 188, 138, 0.1);
+  color: var(--primary-color);
 }
 
 .mobile-menu-button {
@@ -500,6 +575,30 @@ body {
 
   .project-card {
     padding: 20px;
+  }
+
+  /* Mobile dropdown adjustments */
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    border-left: 3px solid var(--primary-color);
+    border-radius: 0;
+    background-color: rgba(30, 30, 30, 0.5);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .dropdown-menu.open {
+    max-height: 300px;
+  }
+  
+  .dropdown-menu li a {
+    padding-left: 45px;
   }
 }
 

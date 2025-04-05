@@ -9,6 +9,7 @@ export interface Project {
   stars?: number;
   forks?: number;
   isContributor?: boolean;
+  showInDropdown?: boolean; // New property to control visibility in dropdown
 }
 
 export const siteConfig: {
@@ -63,13 +64,15 @@ export const siteConfig: {
         title: "esx-vscode",
         description: "A VSCode extension for FiveM ESX developers.",
         technologies: ["VSCode Extension"],
-        link: "https://github.com/RealKnoblauchbrot/esx-vscode"
+        link: "https://github.com/RealKnoblauchbrot/esx-vscode",
+        showInDropdown: true // Show in dropdown
       },
       {
         title: "ESX Framework",
         description: "A framework for easily creating Roleplay servers.",
         link: "https://github.com/esx-framework/esx_core",
         isContributor: true,
+        showInDropdown: true // Show in dropdown
       }
     ]
   },

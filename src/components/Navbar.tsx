@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { siteConfig } from '../data';
 
 interface NavbarProps {
   activeSection: string;
@@ -6,13 +7,21 @@ interface NavbarProps {
 
 function Navbar({ activeSection }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    if (isDropdownOpen) setIsDropdownOpen(false);
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+    setIsDropdownOpen(false);
+  };
+  
+  const toggleDropdown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -49,14 +58,28 @@ function Navbar({ activeSection }: NavbarProps) {
               Skills
             </a>
           </li>
-          <li>
+          <li className="dropdown">
             <a 
               href="/#projects" 
               className={activeSection === 'projects' ? 'active' : ''}
-              onClick={closeMenu}
+              onClick={toggleDropdown}
             >
-              Projects
+              Projects <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>
             </a>
+            <ul className={`dropdown-menu ${isDropdownOpen ? 'open' : ''}`}>
+              {siteConfig.projects.items.map((project, index) => (
+                <li key={index}>
+                  <a 
+                    href={project.link} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                  >
+                    {project.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </li>
           <li>
             <a 
