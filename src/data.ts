@@ -66,13 +66,6 @@ export const siteConfig: {
         technologies: ["VSCode Extension"],
         link: "https://github.com/RealKnoblauchbrot/esx-vscode",
         showInDropdown: true // Show in dropdown
-      },
-      {
-        title: "ESX Framework",
-        description: "A framework for easily creating Roleplay servers.",
-        link: "https://github.com/esx-framework/esx_core",
-        isContributor: true,
-        showInDropdown: true // Show in dropdown
       }
     ]
   },
