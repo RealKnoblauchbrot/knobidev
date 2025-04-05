@@ -1,4 +1,4 @@
-import { siteConfig } from '../data';
+import { siteConfig } from '@data';
 
 function Footer() {
   return (

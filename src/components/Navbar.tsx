@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { siteConfig } from '../data';
+import { Link } from 'react-router-dom';
+import { siteConfig, getProjectId } from '@data';
 
 interface NavbarProps {
   activeSection: string;
@@ -8,6 +9,11 @@ interface NavbarProps {
 function Navbar({ activeSection }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Filter projects that should appear in dropdown
+  const dropdownProjects = siteConfig.projects.items.filter(project => project.showInDropdown === true);
+  // Check if we have any projects to show in dropdown
+  const hasDropdownProjects = dropdownProjects.length > 0;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,6 +26,7 @@ function Navbar({ activeSection }: NavbarProps) {
   };
   
   const toggleDropdown = (e: React.MouseEvent) => {
+    if (!hasDropdownProjects) return; // Don't toggle if no projects
     e.preventDefault();
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -27,9 +34,9 @@ function Navbar({ activeSection }: NavbarProps) {
   return (
     <nav className="navbar">
       <div className="container">
-        <a href="/" className={activeSection === 'home' ? 'logo active' : 'logo'}>
+        <Link to="/" className={activeSection === 'home' ? 'logo active' : 'logo'} onClick={closeMenu}>
           <img src="/assets/logo.webp" alt="KB" />
-        </a>
+        </Link>
         
         <button className="mobile-menu-button" onClick={toggleMenu} aria-label="Toggle menu">
           <div className={`hamburger ${isMenuOpen ? 'open' : ''}`}>
@@ -41,54 +48,55 @@ function Navbar({ activeSection }: NavbarProps) {
         
         <ul className={`nav-links ${isMenuOpen ? 'menu-open' : ''}`}>
           <li>
-            <a 
-              href="/#about" 
+            <Link 
+              to="/#about" 
               className={activeSection === 'about' ? 'active' : ''}
               onClick={closeMenu}
             >
               About
-            </a>
+            </Link>
           </li>
           <li>
-            <a 
-              href="/#skills" 
+            <Link 
+              to="/#skills" 
               className={activeSection === 'skills' ? 'active' : ''}
               onClick={closeMenu}
             >
               Skills
-            </a>
+            </Link>
           </li>
-          <li className="dropdown">
-            <a 
-              href="/#projects" 
+          <li className={hasDropdownProjects ? "dropdown" : ""}>
+            <Link 
+              to="/#projects" 
               className={activeSection === 'projects' ? 'active' : ''}
-              onClick={toggleDropdown}
+              onClick={hasDropdownProjects ? toggleDropdown : closeMenu}
             >
-              Projects <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>
-            </a>
-            <ul className={`dropdown-menu ${isDropdownOpen ? 'open' : ''}`}>
-              {siteConfig.projects.items.map((project, index) => (
-                <li key={index}>
-                  <a 
-                    href={project.link} 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={closeMenu}
-                  >
-                    {project.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
+              Projects {hasDropdownProjects && <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>}
+            </Link>
+            
+            {hasDropdownProjects && (
+              <ul className={`dropdown-menu ${isDropdownOpen ? 'open' : ''}`}>
+                {dropdownProjects.map((project, index) => (
+                  <li key={index}>
+                    <Link 
+                      to={`/project/${project.id || getProjectId(project.title)}`}
+                      onClick={closeMenu}
+                    >
+                      {project.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
           <li>
-            <a 
-              href="/#contact" 
+            <Link 
+              to="/#contact" 
               className={activeSection === 'contact' ? 'active' : ''}
               onClick={closeMenu}
             >
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

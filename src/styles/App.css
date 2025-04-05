@@ -256,6 +256,8 @@ body {
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  outline: none;
+  border: none;
 }
 
 .cta-button:hover {
@@ -500,6 +502,80 @@ body {
   color: var(--primary-color);
 }
 
+/* Project detail page styles */
+.project-detail {
+  padding-top: 40px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+}
+
+.project-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.project-description {
+  margin-bottom: 30px;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* Error page styles */
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 200px);
+  text-align: center;
+  padding-top: 80px;
+}
+
+.error-page h1 {
+  font-size: 6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+  line-height: 1;
+}
+
+.error-page h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.error-actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
   .mobile-menu-button {
     display: block;
@@ -599,6 +675,19 @@ body {
   
   .dropdown-menu li a {
     padding-left: 45px;
+  }
+
+  .error-page h1 {
+    font-size: 4rem;
+  }
+  
+  .error-page h2 {
+    font-size: 1.8rem;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+    gap: 15px;
   }
 }
 

@@ -1,13 +1,30 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './App.css';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
-import { siteConfig, getEnhancedProjects, Project, isGitHubUrl } from './data';
+import Footer from '@components/Footer';
+import Navbar from '@components/Navbar';
+import { siteConfig, getEnhancedProjects, Project, isGitHubUrl } from '@data';
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [projects, setProjects] = useState<Project[]>(siteConfig.projects.items);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  // Handle hash navigation and scroll to section
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash) {
+      const sectionId = hash.substring(1); // Remove the # character
+      setActiveSection(sectionId);
+      
+      // Scroll to the section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     const observerOptions = {

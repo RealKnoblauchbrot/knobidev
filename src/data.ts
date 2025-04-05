@@ -9,7 +9,18 @@ export interface Project {
   stars?: number;
   forks?: number;
   isContributor?: boolean;
-  showInDropdown?: boolean; // New property to control visibility in dropdown
+  showInDropdown?: boolean; // Default to false
+  id?: string; // URL-friendly ID for the project
+}
+
+// Helper function to generate URL-friendly IDs from project titles
+export function getProjectId(title: string): string {
+  return title.toLowerCase().replace(/\s+/g, '-');
+}
+
+// Helper function to check if a URL is a GitHub URL
+export function isGitHubUrl(url: string): boolean {
+  return url.includes('github.com') && !!extractRepoInfoFromUrl(url);
 }
 
 export const siteConfig: {
@@ -65,7 +76,6 @@ export const siteConfig: {
         description: "A VSCode extension for FiveM ESX developers.",
         technologies: ["VSCode Extension"],
         link: "https://github.com/RealKnoblauchbrot/esx-vscode",
-        showInDropdown: true // Show in dropdown
       }
     ]
   },
@@ -87,35 +97,45 @@ export const siteConfig: {
 };
 
 /**
- * Checks if a URL is a GitHub repository URL
- */
-export function isGitHubUrl(url: string): boolean {
-  return url?.includes('github.com') && !!extractRepoInfoFromUrl(url);
-}
-
-/**
  * Enhances project data with information fetched from GitHub
  */
 export async function getEnhancedProjects(): Promise<Project[]> {
-  const projects = [...siteConfig.projects.items];
-  
-  for (const project of projects) {
-    if (project.link && isGitHubUrl(project.link)) {
-      // Fetch repository details
-      const repoDetails = await fetchRepoDetails(project.link);
-      
-      if (repoDetails) {
-        project.fetchedTechnologies = repoDetails.languages;
-        project.stars = repoDetails.stars;
-        project.forks = repoDetails.forks;
-        
-        // Check if user is a contributor (not owner)
-        if (siteConfig.githubUsername && !project.isContributor) {
-          project.isContributor = await checkIsContributor(project.link, siteConfig.githubUsername);
+  const enhancedProjects = await Promise.all(
+    siteConfig.projects.items.map(async (project) => {
+      // Generate project ID for URL if not present
+      if (!project.id) {
+        project.id = getProjectId(project.title);
+      }
+
+      // Only fetch GitHub data if there's a GitHub link
+      if (project.link && isGitHubUrl(project.link)) {
+        try {
+          const repoInfo = extractRepoInfoFromUrl(project.link);
+          if (repoInfo) {
+            const { owner, repo } = repoInfo;
+            const repoDetails = await fetchRepoDetails(owner, repo);
+            const isContributor = await checkIsContributor(
+              owner, 
+              repo, 
+              siteConfig.githubUsername
+            );
+            
+            return {
+              ...project,
+              stars: repoDetails?.stars,
+              forks: repoDetails?.forks,
+              fetchedTechnologies: repoDetails?.languages || [],
+              isContributor
+            };
+          }
+        } catch (error) {
+          console.error(`Failed to fetch data for ${project.title}:`, error);
         }
       }
-    }
-  }
-  
-  return projects;
+      
+      return project;
+    })
+  );
+
+  return enhancedProjects;
 }
