@@ -63,23 +63,3 @@ export async function fetchRepoDetails(owner: string, repo: string): Promise<Rep
     return null;
   }
 }
-
-/**
- * Checks if a user is a contributor to a repository
- */
-export async function checkIsContributor(owner: string, repo: string, username: string): Promise<boolean> {
-  try {
-    // Check if the user is a contributor to the repository
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contributors`);
-    
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
-    
-    const contributors = await response.json();
-    return contributors.some((contributor: any) => contributor.login === username);
-  } catch (error) {
-    console.error(`Failed to check contributor status for ${username} in ${owner}/${repo}:`, error);
-    return false;
-  }
-}

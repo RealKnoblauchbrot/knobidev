@@ -1,4 +1,4 @@
-import { fetchRepoDetails, checkIsContributor, extractRepoInfoFromUrl } from '@utils/github';
+import { fetchRepoDetails, extractRepoInfoFromUrl } from '@utils/github';
 
 export interface Project {
   title: string;
@@ -121,18 +121,12 @@ export async function getEnhancedProjects(): Promise<Project[]> {
           if (repoInfo) {
             const { owner, repo } = repoInfo;
             const repoDetails = await fetchRepoDetails(owner, repo);
-            const isContributor = await checkIsContributor(
-              owner, 
-              repo, 
-              siteConfig.githubUsername
-            );
             
             return {
               ...project,
               stars: repoDetails?.stars,
               forks: repoDetails?.forks,
               fetchedTechnologies: repoDetails?.languages || [],
-              isContributor
             };
           }
         } catch (error) {
