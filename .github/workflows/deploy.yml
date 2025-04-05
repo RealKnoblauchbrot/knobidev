@@ -24,6 +24,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Create CNAME file
+        run: echo "knobidev.de" > dist/CNAME
+
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
