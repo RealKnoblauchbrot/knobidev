@@ -79,7 +79,7 @@ function Navbar({ activeSection }: NavbarProps) {
                 {dropdownProjects.map((project, index) => (
                   <li key={index}>
                     <Link 
-                      to={`/project/${project.id || getProjectId(project.title)}`}
+                      to={project.link || '/'}
                       onClick={closeMenu}
                     >
                       {project.title}
