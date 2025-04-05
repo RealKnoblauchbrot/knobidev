@@ -1,0 +1,74 @@
+{
+  "sidecategories": {
+    "material": [
+      "raw",
+      "refined"
+    ]
+  },
+  "items": [
+    {
+      "name": "carbon",
+      "category": ["material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "copper_ore",
+      "category": ["material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "diamond",
+      "category": ["material"],
+      "sidecategory": ["refined"]
+    },
+    {
+      "name": "gold_ingot",
+      "category": ["material"],
+      "sidecategory": ["refined"]
+    },
+    {
+      "name": "gold_ore",
+      "category": ["mining", "material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "iron_ingot",
+      "category": ["material"],
+      "sidecategory": ["refined"]
+    },
+    {
+      "name": "iron_ore",
+      "category": ["mining", "material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "pickaxe",
+      "category": ["mining", "tool"]
+    },
+    {
+      "name": "silver_ingot",
+      "category": ["material"],
+      "sidecategory": ["refined"]
+    },
+    {
+      "name": "silver_ore",
+      "category": ["mining", "material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "uncut_emerald",
+      "category": ["mining", "material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "uncut_ruby",
+      "category": ["mining", "material"],
+      "sidecategory": ["raw"]
+    },
+    {
+      "name": "uncut_sapphire",
+      "category": ["mining", "material"],
+      "sidecategory": ["raw"]
+    }
+  ]
+}
