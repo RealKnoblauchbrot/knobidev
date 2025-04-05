@@ -76,6 +76,13 @@ export const siteConfig: {
         description: "A VSCode extension for FiveM ESX developers.",
         technologies: ["VSCode Extension"],
         link: "https://github.com/RealKnoblauchbrot/esx-vscode",
+      },
+      {
+        title: "Item Gallery",
+        description: "A Item Gallery mainly for GTA 5 Roleplay servers.",
+        technologies: ["React", "Typescript"],
+        showInDropdown: true,
+        link: "/itemgallery"
       }
     ]
   },
