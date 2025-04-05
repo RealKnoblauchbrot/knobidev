@@ -21,8 +21,10 @@
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
-      "@data/*": ["./src/data/*"],
-      "@types/*": ["./src/types/*"]
+      "@data": ["./src/data.ts"],
+      "@types/*": ["./src/types/*"],
+      "@config/*": ["./src/config/*"],
+      "@styles/*": ["./src/styles/*"],
     },
 
     /* Linting */
