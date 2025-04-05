@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import './App.css';
+import '@styles/App.css';
 import Footer from '@components/Footer';
 import Navbar from '@components/Navbar';
 import { siteConfig, getEnhancedProjects, Project, isGitHubUrl } from '@data';

@@ -23,7 +23,6 @@
       "@utils/*": ["./src/utils/*"],
       "@data": ["./src/data.ts"],
       "@types/*": ["./src/types/*"],
-      "@config/*": ["./src/config/*"],
       "@styles/*": ["./src/styles/*"],
     },
 
