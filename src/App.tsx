@@ -4,6 +4,16 @@ import '@styles/App.css';
 import Footer from '@components/Footer';
 import Navbar from '@components/Navbar';
 import { siteConfig, getEnhancedProjects, Project, isGitHubUrl } from '@data';
+import { FaStar, FaCodeBranch, FaCode, FaLaptopCode, FaDatabase, FaLanguage, FaNetworkWired, FaDiscord } from 'react-icons/fa';
+
+// Icon mapping object
+const iconMap = {
+  FaCode,
+  FaLaptopCode,
+  FaDatabase,
+  FaLanguage,
+  FaNetworkWired
+};
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -101,12 +111,18 @@ function App() {
         <section id="skills" className="section">
           <h2 className="section-title">{siteConfig.skills.title}</h2>
           <div className="skills-grid">
-            {siteConfig.skills.items.map((skill, index) => (
-              <div className="skill-card" key={index}>
-                {skill.name}
-                {skill.description && <p className="skill-description">{skill.description}</p>}
-              </div>
-            ))}
+            {siteConfig.skills.items.map((skill, index) => {
+              // Get icon component from the mapping
+              const IconComponent = iconMap[skill.iconName as keyof typeof iconMap] || FaCode;
+              
+              return (
+                <div className="skill-card" key={index}>
+                  <IconComponent className="skill-icon" />
+                  <span className="skill-name">{skill.name}</span>
+                  {skill.description && <p className="skill-description">{skill.description}</p>}
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -129,12 +145,12 @@ function App() {
                   {project.stars !== undefined && (
                     <div className="repo-stats">
                       <span className="repo-stat" title="Stars">
-                        <span className="star-icon">★</span> {project.stars}
+                        <FaStar className="star-icon" /> {project.stars}
                       </span>
                       
                       {project.forks !== undefined && (
                         <span className="repo-stat" title="Forks">
-                          <span className="fork-icon">⑂</span> {project.forks}
+                          <FaCodeBranch className="fork-icon" /> {project.forks}
                         </span>
                       )}
                     </div>
@@ -174,11 +190,13 @@ function App() {
         </section>
 
         <section id="contact" className="section">
-          <h2 className="section-title">{siteConfig.contact.title}</h2>
+          <h2 className="section-title">
+            {siteConfig.contact.title}
+          </h2>
           <div className="contact-content">
             <p>{siteConfig.contact.message}</p>
             <a href={siteConfig.contact.discord} className="contact-link">
-              Discord
+              <FaDiscord className="contact-icon" /> Discord
             </a>
           </div>
         </section>

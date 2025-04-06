@@ -21,7 +21,7 @@ export function isGitHubUrl(url: string): boolean {
 export const siteConfig: {
   skills: {
     title: string;
-    items: { name: string; description: string }[];
+    items: { name: string; description: string; iconName: string }[];
   };
   projects: {
     title: string;
@@ -42,23 +42,28 @@ export const siteConfig: {
     items: [
       { 
         name: "Frontend",
-        description: "Javascript, Typescript, React, Svelte" 
+        description: "Javascript, Typescript, React, Svelte",
+        iconName: "FaCode" 
       },
       { 
         name: "Backend",
-        description: "Node.js"
+        description: "Node.js",
+        iconName: "FaLaptopCode"
       },
       { 
         name: "Network",
-        description: "(Ongoing) Network Associate"
+        description: "(Ongoing) Network Associate",
+        iconName: "FaNetworkWired"
       },
       { 
         name: "Databases",
-        description: "MySQL/MariaDB" 
+        description: "MySQL/MariaDB",
+        iconName: "FaDatabase"
       },
       { 
         name: "Languages",
-        description: "German (Native), English (Fluent), Spanish (Intermediate)" 
+        description: "German (Native), English (Fluent), Spanish (Intermediate)",
+        iconName: "FaLanguage"
       }
     ]
   },

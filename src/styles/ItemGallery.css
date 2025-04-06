@@ -60,6 +60,7 @@
 .search-container {
   max-width: 300px;
   width: 100%;
+  position: relative;
 }
 
 .search-input {
@@ -75,6 +76,15 @@
 .search-input:focus {
   outline: none;
   border-color: var(--primary-color);
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+  opacity: 0.7;
 }
 
 .loading-bar-container {
@@ -116,6 +126,29 @@
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(212, 188, 138, 0.1);
   border-color: var(--primary-color);
+}
+
+.download-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.item-card:hover .download-overlay {
+  opacity: 1;
+}
+
+.download-icon {
+  color: #fff;
+  font-size: 1.5rem;
 }
 
 .item-image-container {
@@ -169,6 +202,11 @@
 
 .back-to-home {
   margin-top: 40px;
+}
+
+.back-link svg {
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 @keyframes pulse {
@@ -414,6 +452,15 @@
   min-width: 40px;
   text-align: center;
   border: 1px solid var(--primary-color);
+}
+
+.info-icon {
+  margin-right: 5px;
+}
+
+.social-icon {
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 @media (max-width: 1200px) {

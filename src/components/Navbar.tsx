@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { siteConfig } from '@data';
+import { FaGithub, FaChevronDown } from 'react-icons/fa';
 
 interface NavbarProps {
   activeSection: string;
@@ -24,7 +25,7 @@ function Navbar({ activeSection }: NavbarProps) {
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
   };
-  
+
   const toggleDropdown = (e: React.MouseEvent) => {
     if (!hasDropdownProjects) return; // Don't toggle if no projects
     e.preventDefault();
@@ -37,7 +38,7 @@ function Navbar({ activeSection }: NavbarProps) {
         <Link to="/" className={activeSection === 'home' ? 'logo active' : 'logo'} onClick={closeMenu}>
           <img src="/assets/logo.webp" alt="KB" />
         </Link>
-        
+
         <button className="mobile-menu-button" onClick={toggleMenu} aria-label="Toggle menu">
           <div className={`hamburger ${isMenuOpen ? 'open' : ''}`}>
             <span></span>
@@ -45,11 +46,11 @@ function Navbar({ activeSection }: NavbarProps) {
             <span></span>
           </div>
         </button>
-        
+
         <ul className={`nav-links ${isMenuOpen ? 'menu-open' : ''}`}>
           <li>
-            <Link 
-              to="/#about" 
+            <Link
+              to="/#about"
               className={activeSection === 'about' ? 'active' : ''}
               onClick={closeMenu}
             >
@@ -57,8 +58,8 @@ function Navbar({ activeSection }: NavbarProps) {
             </Link>
           </li>
           <li>
-            <Link 
-              to="/#skills" 
+            <Link
+              to="/#skills"
               className={activeSection === 'skills' ? 'active' : ''}
               onClick={closeMenu}
             >
@@ -66,19 +67,21 @@ function Navbar({ activeSection }: NavbarProps) {
             </Link>
           </li>
           <li className={hasDropdownProjects ? "dropdown" : ""}>
-            <Link 
-              to="/#projects" 
+            <Link
+              to="/#projects"
               className={activeSection === 'projects' ? 'active' : ''}
               onClick={hasDropdownProjects ? toggleDropdown : closeMenu}
             >
-              Projects {hasDropdownProjects && <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>}
+              Projects {hasDropdownProjects && (
+                <FaChevronDown className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`} />
+              )}
             </Link>
-            
+
             {hasDropdownProjects && (
               <ul className={`dropdown-menu ${isDropdownOpen ? 'open' : ''}`}>
                 {dropdownProjects.map((project, index) => (
                   <li key={index}>
-                    <Link 
+                    <Link
                       to={project.link || '/'}
                       onClick={closeMenu}
                     >
@@ -90,13 +93,23 @@ function Navbar({ activeSection }: NavbarProps) {
             )}
           </li>
           <li>
-            <Link 
-              to="/#contact" 
+            <Link
+              to="/#contact"
               className={activeSection === 'contact' ? 'active' : ''}
               onClick={closeMenu}
             >
               Contact
             </Link>
+          </li>
+          <li className="github-link">
+            <a
+              href="https://github.com/RealKnoblauchbrot/knobidev"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View source on GitHub"
+            >
+              <FaGithub size={24} />
+            </a>
           </li>
         </ul>
       </div>

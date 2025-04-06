@@ -128,8 +128,9 @@ body {
 
 .dropdown-arrow {
   margin-left: 5px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   transition: transform 0.3s ease;
+  vertical-align: middle;
 }
 
 .dropdown-arrow.open {
@@ -321,6 +322,12 @@ body {
   background-color: var(--primary-color);
 }
 
+.section-icon {
+  vertical-align: middle;
+  margin-right: 10px;
+  font-size: 1.6rem;
+}
+
 .about-content {
   display: flex;
   gap: 50px;
@@ -352,6 +359,19 @@ body {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(212, 188, 138, 0.1);
   border-color: var(--primary-color);
+}
+
+.skill-icon {
+  display: block;
+  margin: 0 auto 10px;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+.skill-name {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .skill-description {
@@ -429,10 +449,12 @@ body {
 
 .star-icon {
   color: #f1e05a; /* GitHub star color */
+  margin-right: 3px;
 }
 
 .fork-icon {
   color: #8b949e; /* GitHub fork color */
+  margin-right: 3px;
 }
 
 .project-technologies {
@@ -501,6 +523,10 @@ body {
 .contact-link:hover {
   color: #e0c995;
   text-decoration: underline;
+}
+
+.contact-icon {
+  margin-right: 6px;
 }
 
 .page-content {
@@ -608,6 +634,12 @@ body {
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.nav-icon {
+  margin-right: 6px;
+  font-size: 0.9em;
+  vertical-align: middle;
 }
 
 @media (max-width: 768px) {

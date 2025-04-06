@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '@components/Footer';
 import Navbar from '@components/Navbar';
 import '@styles/ItemGallery.css';
+import { FaSearch, FaDownload, FaInfoCircle, FaArrowLeft } from 'react-icons/fa';
 
 export interface GalleryItem {
   name: string;
@@ -236,7 +237,7 @@ function ItemGalleryPage() {
 
           <div className="license-legend-toggle">
             <button onClick={() => setShowLicenseInfo(!showLicenseInfo)} className="license-info-button">
-              {showLicenseInfo ? 'Hide' : 'Show'} License Glossary
+              <FaInfoCircle className="info-icon" /> {showLicenseInfo ? 'Hide' : 'Show'} License Glossary
             </button>
 
             {showLicenseInfo && (
@@ -306,6 +307,7 @@ function ItemGalleryPage() {
                   onChange={handleSearchChange}
                   className="search-input"
                 />
+                <FaSearch className="search-icon" />
               </div>
             </div>
           )}
@@ -337,6 +339,9 @@ function ItemGalleryPage() {
                     <span className="license-badge">
                       {item.license || 'UNL'}
                     </span>
+                    <div className="download-overlay">
+                      <FaDownload className="download-icon" />
+                    </div>
                   </div>
                   <div className="item-content">
                     <h3 className="item-name">{formatItemName(item.name)}</h3>
@@ -352,7 +357,7 @@ function ItemGalleryPage() {
         )}
 
         <div className="back-to-home">
-          <Link to="/" className="back-link">← Back to Home</Link>
+          <Link to="/" className="back-link"><FaArrowLeft /> Back to Home</Link>
         </div>
       </div>
 

@@ -1,0 +1,20 @@
+.github-link {
+  display: flex;
+  align-items: center;
+}
+
+.github-icon {
+  fill: var(--text-color);
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.github-icon:hover {
+  fill: var(--primary-color);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .github-link {
+    margin: 10px 0;
+  }
+}
