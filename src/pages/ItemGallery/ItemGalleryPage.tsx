@@ -28,19 +28,28 @@ function ItemGalleryPage() {
   const [licenseTypes, setLicenseTypes] = useState<Record<string, string>>({});
   const [authors, setAuthors] = useState<Record<string, Author>>({});
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [items, setItems] = useState<GalleryItem[]>([]);
 
   useEffect(() => {
     const fetchGalleryData = async () => {
       try {
         startLoading();
-        const response = await fetch('/data/itemGalleryConfig.json');
-        if (!response.ok) {
+        const [configResponse, itemsResponse] = await Promise.all([
+          fetch('/data/itemGalleryConfig.json'),
+          fetch('/data/items.json')
+        ]);
+        
+        if (!configResponse.ok || !itemsResponse.ok) {
           throw new Error('Failed to fetch gallery data');
         }
-        const data: ItemGalleryConfig = await response.json();
-        setGalleryConfig(data);
-        setLicenseTypes(data.licenseTypes || {});
-        setAuthors(data.authors || {});
+        
+        const configData: ItemGalleryConfig = await configResponse.json();
+        const itemsData: GalleryItem[] = await itemsResponse.json();
+        
+        setGalleryConfig(configData);
+        setItems(itemsData);
+        setLicenseTypes(configData.licenseTypes || {});
+        setAuthors(configData.authors || {});
         setDataLoaded(true);
       } catch (error) {
         console.error('Error loading gallery data:', error);
@@ -50,8 +59,8 @@ function ItemGalleryPage() {
     fetchGalleryData();
   }, []);
 
-  const allCategories = galleryConfig ? [...new Set(
-    galleryConfig.items.flatMap(item => item.category)
+  const allCategories = items.length ? [...new Set(
+    items.flatMap(item => item.category)
   )] : [];
 
   const availableSideCategories = useMemo(() => {
@@ -68,7 +77,7 @@ function ItemGalleryPage() {
     return [...new Set(sideCategories)];
   }, [galleryConfig, selectedCategories]);
 
-  const filteredItems = galleryConfig ? galleryConfig.items.filter(item => {
+  const filteredItems = items.filter(item => {
     const matchesCategories = selectedCategories.length === 0 ||
       selectedCategories.every(cat => item.category.includes(cat));
 
@@ -78,7 +87,7 @@ function ItemGalleryPage() {
     const matchesSearch = item.label.toLowerCase().includes(searchTerm.toLowerCase());
 
     return matchesCategories && matchesSideCategories && matchesSearch;
-  }) : [];
+  });
 
   const toggleCategory = (category: string) => {
     startLoading();
@@ -215,6 +224,8 @@ function ItemGalleryPage() {
               toggleSideCategory={toggleSideCategory}
               startLoading={startLoading}
               setSearchTerm={setSearchTerm}
+              totalItems={items.length}
+              filteredItems={filteredItems.length}
             />
 
             <div className="itemgallery-grid">

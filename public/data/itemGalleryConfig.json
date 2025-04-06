@@ -16,26 +16,59 @@
   "sidecategories": {
     "material": [
       "raw",
-      "refined"
+      "refined",
+      "single",
+      "bundle"
     ],
     "animal": [
       "part",
       "meat"
     ],
-    "consumable": [
-      "food",
-      "drink",
-      "drug"
+    "jewelry": [
+      "chain",
+      "earring",
+      "necklace",
+      "ring"
+    ],
+    "gambling": [
+      "cards",
+      "chips"
+    ],
+    "clothing": [
+      "armor",
+      "backpack"
+    ],
+    "electronic": [
+      "battery"
+    ],
+    "food": [
+      "fruit",
+      "vegetable",
+      "meat",
+      "fish",
+      "fastfood",
+      "snack"
+    ],
+    "drink": [
+      "alcoholic",
+      "non-alcoholic",
+      "cocktail",
+      "beer",
+      "wine",
+      "champagne"
+    ],
+    "drug": [
+      "medical",
+      "recreational",
+      "illegal"
+    ],
+    "farming": [
+      "seeds",
+      "equipment"
+    ],
+    "tobacco": [
+      "cigar",
+      "cigarette"
     ]
-  },
-  "items": [
-    {
-      "label": "Lettuce",
-      "file": "lettuce",
-      "category": ["consumable"],
-      "sidecategory": ["food"],
-      "license": "CC-BY-NC",
-      "author": "tankietwitch"
-    }
-  ]
+  }
 }

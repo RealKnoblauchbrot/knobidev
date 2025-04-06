@@ -13,6 +13,8 @@ interface ItemGalleryFiltersProps {
   toggleSideCategory: (category: string) => void;
   startLoading: () => void;
   setSearchTerm: (term: string) => void;
+  totalItems: number;
+  filteredItems: number;
 }
 
 function ItemGalleryFilters({
@@ -25,7 +27,9 @@ function ItemGalleryFilters({
   selectedSideCategories,
   toggleSideCategory,
   startLoading,
-  setSearchTerm
+  setSearchTerm,
+  totalItems,
+  filteredItems
 }: ItemGalleryFiltersProps) {
   const searchTimeoutRef = useRef<number | null>(null);
   const visibleCategories = showAllCategories
@@ -47,25 +51,43 @@ function ItemGalleryFilters({
 
   return (
     <div className="itemgallery-filters">
-      <div className="category-filters">
-        {visibleCategories.map(category => (
-          <button
-            key={category}
-            className={`category-filter ${selectedCategories.includes(category) ? 'active' : ''}`}
-            onClick={() => toggleCategory(category)}
-          >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
-          </button>
-        ))}
+      <div className="filters-top-row">
+        <div className="category-filters">
+          {visibleCategories.map(category => (
+            <button
+              key={category}
+              className={`category-filter ${selectedCategories.includes(category) ? 'active' : ''}`}
+              onClick={() => toggleCategory(category)}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
 
-        {categories.length > INITIAL_CATEGORY_COUNT && (
-          <button
-            className="category-filter more-button"
-            onClick={handleToggleCategories}
-          >
-            {showAllCategories ? 'Less' : 'More'}
-          </button>
-        )}
+          {categories.length > INITIAL_CATEGORY_COUNT && (
+            <button
+              className="category-filter more-button"
+              onClick={handleToggleCategories}
+            >
+              {showAllCategories ? 'Less' : 'More'}
+            </button>
+          )}
+        </div>
+
+        <div className="search-section">
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search items..."
+              onChange={handleSearchChange}
+              className="search-input"
+            />
+            <FaSearch className="search-icon" />
+          </div>
+          
+          <div className="item-count">
+            Showing <span className="count-highlight">{filteredItems}</span> of <span className="count-highlight">{totalItems}</span> items
+          </div>
+        </div>
       </div>
 
       {selectedCategories.length > 0 && availableSideCategories.length > 0 && (
@@ -81,16 +103,6 @@ function ItemGalleryFilters({
           ))}
         </div>
       )}
-
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search items..."
-          onChange={handleSearchChange}
-          className="search-input"
-        />
-        <FaSearch className="search-icon" />
-      </div>
     </div>
   );
 }
