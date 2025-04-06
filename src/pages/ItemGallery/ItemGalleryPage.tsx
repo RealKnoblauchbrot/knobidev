@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '@components/Footer';
 import Navbar from '@components/Navbar';
@@ -37,6 +37,10 @@ function ItemGalleryPage() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const searchTimeoutRef = useRef<number | null>(null);
   const [showLicenseInfo, setShowLicenseInfo] = useState(false);
+
+  const ITEMS_PER_PAGE = 12; // Number of items to load at a time
+  const [visibleItemCount, setVisibleItemCount] = useState(ITEMS_PER_PAGE);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const [galleryConfig, setGalleryConfig] = useState<ItemGalleryConfig | null>(null);
   const [licenseTypes, setLicenseTypes] = useState<Record<string, string>>({});
@@ -204,6 +208,33 @@ function ItemGalleryPage() {
     }
   };
 
+  const loadMoreItems = useCallback(() => {
+    setVisibleItemCount(prevCount => prevCount + ITEMS_PER_PAGE);
+  }, []);
+
+  useEffect(() => {
+    if (!loadMoreRef.current || filteredItems.length <= visibleItemCount) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          loadMoreItems();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [filteredItems.length, visibleItemCount, loadMoreItems]);
+
+  useEffect(() => {
+    setVisibleItemCount(ITEMS_PER_PAGE);
+  }, [selectedCategories, selectedSideCategories, searchTerm]);
+
   return (
     <div>
       <Navbar activeSection={activeSection} />
@@ -322,32 +353,43 @@ function ItemGalleryPage() {
         {dataLoaded && (
           <div className="itemgallery-grid">
             {filteredItems.length > 0 ? (
-              filteredItems.map((item, index) => (
-                <div
-                  className="item-card"
-                  key={index}
-                  onClick={() => handleItemDownload(item)}
-                  title={`Click to download ${formatItemName(item.name)}`}
-                >
-                  <div className="item-image-container">
-                    <img
-                      src={`/assets/items/${item.name}.webp`}
-                      alt={formatItemName(item.name)}
-                      className="item-image"
-                      loading="lazy"
-                    />
-                    <span className="license-badge">
-                      {item.license || 'UNL'}
-                    </span>
-                    <div className="download-overlay">
-                      <FaDownload className="download-icon" />
+              <>
+                {filteredItems.slice(0, visibleItemCount).map((item, index) => (
+                  <div
+                    className="item-card"
+                    key={index}
+                    onClick={() => handleItemDownload(item)}
+                    title={`Click to download ${formatItemName(item.name)}`}
+                  >
+                    <div className="item-image-container">
+                      <img
+                        src={`/assets/items/${item.name}.webp`}
+                        alt={formatItemName(item.name)}
+                        className="item-image"
+                        loading="lazy"
+                      />
+                      <span className="license-badge">
+                        {item.license || 'UNL'}
+                      </span>
+                      <div className="download-overlay">
+                        <FaDownload className="download-icon" />
+                      </div>
+                    </div>
+                    <div className="item-content">
+                      <h3 className="item-name">{formatItemName(item.name)}</h3>
                     </div>
                   </div>
-                  <div className="item-content">
-                    <h3 className="item-name">{formatItemName(item.name)}</h3>
+                ))}
+                {visibleItemCount < filteredItems.length && (
+                  <div 
+                    ref={loadMoreRef} 
+                    className="load-more-trigger"
+                    style={{ height: '20px', margin: '20px auto', textAlign: 'center' }}
+                  >
+                    <span className="loading-spinner">Loading more items...</span>
                   </div>
-                </div>
-              ))
+                )}
+              </>
             ) : (
               <div className="no-items-found">
                 <p>No items found matching your search criteria.</p>
