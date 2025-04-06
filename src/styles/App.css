@@ -1,5 +1,6 @@
 :root {
   --primary-color: #d4bc8a; /* Beige accent color */
+  --primary-color-rgb: 212, 188, 138; /* RGB value for primary color */
   --background-color: #121212; /* Dark mode background */
   --card-background: #1e1e1e; /* Slightly lighter dark for cards */
   --text-color: #f0f0f0; /* Light text color for readability */
@@ -28,19 +29,22 @@ html, body {
 ::-webkit-scrollbar {
   width: var(--scrollbar-width);
   z-index: 2000;
+  position: absolute;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--background-color);
+  z-index: 1999;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--primary-color);
   border-radius: 5px;
+  z-index: 2000;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #e0c995;
+  z-index: 2000;
 }
 
 body {
@@ -49,205 +53,13 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   position: relative;
+  overflow-y: overlay; /* This makes the scrollbar overlay the content instead of taking space */
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  width: calc(100% - var(--scrollbar-width)); /* Account for scrollbar width */
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(18, 18, 18, 0.95);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  box-sizing: border-box;
-}
-
-.navbar .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  
-}
-
-.logo {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  line-height: 1.0 !important;
-  border-radius: 50%;
-}
-
-.logo img {
-  width: 45px;
-  vertical-align: middle;
-  object-fit: contain;
-}
-
-.nav-links {
-  display: flex;
-  gap: 30px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: var(--primary-color);
-}
-
-.nav-links a.active {
-  color: var(--primary-color);
-  font-weight: 700;
-}
-
-/* Dropdown styling */
-.nav-links .dropdown {
-  position: relative;
-}
-
-.dropdown-arrow {
-  margin-left: 5px;
-  font-size: 0.7rem;
-  transition: transform 0.3s ease;
-  vertical-align: middle;
-}
-
-.dropdown-arrow.open {
-  transform: rotate(180deg);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  min-width: 180px;
-  z-index: 1200;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-}
-
-.dropdown-menu.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-menu li {
-  display: block;
-  width: 100%;
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 10px 15px;
-  color: var(--text-color);
-  text-decoration: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dropdown-menu a:hover {
-  background-color: rgba(212, 188, 138, 0.1);
-  color: var(--primary-color);
-}
-
-.mobile-menu-button {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1100;
-}
-
-.hamburger {
-  width: 30px;
-  height: 24px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hamburger span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background-color: var(--text-color);
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
-
-.hamburger.open span:nth-child(1) {
-  transform: translateY(10.5px) rotate(45deg);
-}
-
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.open span:nth-child(3) {
-  transform: translateY(-10.5px) rotate(-45deg);
-}
-
-.opensource-banner {
-  background-color: var(--primary-color);
-  color: var(--background-color);
-  text-align: center;
-  padding: 10px 0;
-  font-weight: 600;
-  position: sticky;
-  top: 80px; /* Position right below navbar */
-  width: 100%;
-  z-index: 900;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: glow 2s infinite alternate;
-}
-
-.opensource-banner .heart {
-  color: #ff3b5c;
-  display: inline-block;
-  margin: 0 3px;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0); }
-  25% { transform: scale(1.5); }
-  50% { transform: scale(0.7); }
-  75% { transform: scale(1.4); }
-  100% { transform: scale(1); }
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 5px rgba(212, 188, 138, 0.5); }
-  to { box-shadow: 0 0 15px rgba(212, 188, 138, 0.8); }
 }
 
 .hero {

@@ -83,13 +83,6 @@ function App() {
   return (
     <div>
       <Navbar activeSection={activeSection} />
-      
-      <div className="opensource-banner">
-        <div className="container">
-          We<span className="heart">❤️</span>Open Source
-        </div>
-      </div>
-
       <div className="container">
         <section id="home" className="hero">
           <h1>Knoblauchbrot</h1>
