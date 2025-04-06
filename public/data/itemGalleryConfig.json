@@ -1,74 +1,481 @@
 {
+  "licenseTypes": {
+    "CC0": "Creative Commons Zero - Public Domain",
+    "CC-BY": "Creative Commons Attribution",
+    "CC-BY-SA": "Creative Commons Attribution-ShareAlike", 
+    "CC-BY-NC": "Creative Commons Attribution-NonCommercial",
+    "PROP": "Proprietary ",
+    "UNL": "UNLICENSED - Original creator retains all rights"
+  },
   "sidecategories": {
     "material": [
       "raw",
       "refined"
+    ],
+    "animal": [
+      "part",
+      "meat"
+    ],
+    "consumable": [
+      "food",
+      "drink",
+      "drug"
     ]
   },
   "items": [
     {
       "name": "carbon",
       "category": ["material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "copper_ore",
       "category": ["material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "diamond",
       "category": ["material"],
-      "sidecategory": ["refined"]
+      "sidecategory": ["refined"],
+      "license": "UNL"
     },
     {
       "name": "gold_ingot",
       "category": ["material"],
-      "sidecategory": ["refined"]
+      "sidecategory": ["refined"],
+      "license": "UNL"
     },
     {
       "name": "gold_ore",
       "category": ["mining", "material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "iron_ingot",
       "category": ["material"],
-      "sidecategory": ["refined"]
+      "sidecategory": ["refined"],
+      "license": "UNL"
     },
     {
       "name": "iron_ore",
       "category": ["mining", "material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "pickaxe",
-      "category": ["mining", "tool"]
+      "category": ["mining", "tool"],
+      "license": "UNL"
     },
     {
       "name": "silver_ingot",
       "category": ["material"],
-      "sidecategory": ["refined"]
+      "sidecategory": ["refined"],
+      "license": "UNL"
     },
     {
       "name": "silver_ore",
       "category": ["mining", "material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "uncut_emerald",
       "category": ["mining", "material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "uncut_ruby",
       "category": ["mining", "material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
     },
     {
       "name": "uncut_sapphire",
       "category": ["mining", "material"],
-      "sidecategory": ["raw"]
+      "sidecategory": ["raw"],
+      "license": "UNL"
+    },
+    {
+      "name": "advanced_lockpick",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "antlers",
+      "category": ["animal"],
+      "sidecategory": ["part"],
+      "license": "UNL"
+    },
+    {
+      "name": "atom_bag",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "atom_fries",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "atom_rings",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "atom_shake",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "atom_soda",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "backpack",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "baconburger",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "badge_fib",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "bankcard_fleeca",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "bankcard_maze",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "beanmachine_coffee",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "bird_feather",
+      "category": ["animal"],
+      "sidecategory": ["part"],
+      "license": "UNL"
+    },
+    {
+      "name": "bitcoin",
+      "category": ["currency"],
+      "license": "UNL"
+    },
+    {
+      "name": "bluefish",
+      "category": ["animal"],
+      "sidecategory": ["meat"],
+      "license": "UNL"
+    },
+    {
+      "name": "boar_tusks",
+      "category": ["animal"],
+      "sidecategory": ["part"],
+      "license": "UNL"
+    },
+    {
+      "name": "bodyarmor",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "bonitosfish",
+      "category": ["animal"],
+      "sidecategory": ["meat"],
+      "license": "UNL"
+    },
+    {
+      "name": "bubble_tea",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "bun",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_bleeder",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_chickenmelt",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_chickenwrap",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_coffee",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_creampie",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_fries",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_frozennugget",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_goatwrap",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_golden_rings",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_heartstopper",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_icecream",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_icecream2",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_icecream_empty",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_meatfree",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_milk",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_milkshake",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_moneyshot",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_rimjob",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_shotnuggets",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_shotrings",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_softdrink",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "burgershot_torpedo",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burger_meat",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "burrito",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "can",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "candy",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "carettacaretta",
+      "category": ["animal"],
+      "sidecategory": ["meat"],
+      "license": "UNL"
+    },
+    {
+      "name": "cash",
+      "category": ["currency"],
+      "license": "UNL"
+    },
+    {
+      "name": "catfish",
+      "category": ["animal"],
+      "sidecategory": ["meat"],
+      "license": "UNL"
+    },
+    {
+      "name": "cheese_fries",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "cooked_fish",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "cougar_claw",
+      "category": ["animal"],
+      "sidecategory": ["part"],
+      "license": "UNL"
+    },
+    {
+      "name": "cow_pelt",
+      "category": ["animal"],
+      "sidecategory": ["part"],
+      "license": "UNL"
+    },
+    {
+      "name": "coyote_pelt",
+      "category": ["animal"],
+      "sidecategory": ["part"],
+      "license": "UNL"
+    },
+    {
+      "name": "fish",
+      "category": ["animal"],
+      "sidecategory": ["meat"],
+      "license": "UNL"
+    },
+    {
+      "name": "fishbait",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "fishingrod",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "fish_fillet",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
+    },
+    {
+      "name": "garfish",
+      "category": ["animal"],
+      "sidecategory": ["meat"],
+      "license": "UNL"
+    },
+    {
+      "name": "green_matcha",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "id_card",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "lawyer_pass",
+      "category": ["tool"],
+      "license": "UNL"
+    },
+    {
+      "name": "leon_iced_tea",
+      "category": ["consumable"],
+      "sidecategory": ["drink"],
+      "license": "UNL"
+    },
+    {
+      "name": "lettuce",
+      "category": ["consumable"],
+      "sidecategory": ["food"],
+      "license": "UNL"
     }
   ]
 }

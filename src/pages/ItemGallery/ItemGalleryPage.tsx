@@ -8,12 +8,14 @@ export interface GalleryItem {
   name: string;
   category: string[];
   sidecategory?: string[];
+  license?: string;
 }
 
 export interface ItemGalleryConfig {
   title: string;
   description: string;
-  sidecategories?: Record<string, string[]>; 
+  sidecategories?: Record<string, string[]>;
+  licenseTypes: Record<string, string>;
   items: GalleryItem[];
 }
 
@@ -33,8 +35,10 @@ function ItemGalleryPage() {
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const searchTimeoutRef = useRef<number | null>(null);
-  
+  const [showLicenseInfo, setShowLicenseInfo] = useState(false);
+
   const [galleryConfig, setGalleryConfig] = useState<ItemGalleryConfig | null>(null);
+  const [licenseTypes, setLicenseTypes] = useState<Record<string, string>>({});
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
@@ -47,54 +51,54 @@ function ItemGalleryPage() {
         }
         const data: ItemGalleryConfig = await response.json();
         setGalleryConfig(data);
+        setLicenseTypes(data.licenseTypes || {});
         setDataLoaded(true);
       } catch (error) {
         console.error('Error loading gallery data:', error);
       }
     };
-    
+
     fetchGalleryData();
   }, []);
-  
+
   const allCategories = galleryConfig ? [...new Set(
     galleryConfig.items.flatMap(item => item.category)
   )] : [];
-  
+
   const availableSideCategories = useMemo(() => {
     if (!galleryConfig || selectedCategories.length === 0) return [];
-    
+
     let sideCategories: string[] = [];
-    
+
     selectedCategories.forEach(mainCat => {
       if (galleryConfig.sidecategories && galleryConfig.sidecategories[mainCat]) {
         sideCategories = [...sideCategories, ...galleryConfig.sidecategories[mainCat]];
       }
     });
-    
+
     return [...new Set(sideCategories)];
   }, [galleryConfig, selectedCategories]);
-  
+
   const initialCategoryCount = 5;
-  const visibleCategories = showAllCategories 
-    ? allCategories 
+  const visibleCategories = showAllCategories
+    ? allCategories
     : allCategories.slice(0, initialCategoryCount);
-  
-  // Filter items based on selected categories, side categories and search term
+
   const filteredItems = galleryConfig ? galleryConfig.items.filter(item => {
-    const matchesCategories = selectedCategories.length === 0 || 
+    const matchesCategories = selectedCategories.length === 0 ||
       selectedCategories.every(cat => item.category.includes(cat));
-    
-    const matchesSideCategories = selectedSideCategories.length === 0 || 
+
+    const matchesSideCategories = selectedSideCategories.length === 0 ||
       (item.sidecategory && selectedSideCategories.every(cat => item.sidecategory?.includes(cat)));
-      
+
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     return matchesCategories && matchesSideCategories && matchesSearch;
   }) : [];
 
   const toggleCategory = (category: string) => {
     startLoading();
-    
+
     if (selectedCategories.includes(category)) {
       setSelectedCategories(prev => prev.filter(cat => cat !== category));
       if (selectedCategories.length <= 1) {
@@ -104,74 +108,73 @@ function ItemGalleryPage() {
       setSelectedCategories(prev => [...prev, category]);
     }
   };
-  
+
   const toggleSideCategory = (category: string) => {
     startLoading();
-    setSelectedSideCategories(prev => 
-      prev.includes(category) 
-        ? prev.filter(cat => cat !== category) 
+    setSelectedSideCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(cat => cat !== category)
         : [...prev, category]
     );
   };
-  
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     startLoading();
     const value = e.target.value;
-    
+
     if (searchTimeoutRef.current) {
       window.clearTimeout(searchTimeoutRef.current);
     }
-    
+
     searchTimeoutRef.current = window.setTimeout(() => {
       setSearchTerm(value);
-    }, 300); // 300ms debounce
+    }, 300);
   };
-  
+
   const handleToggleCategories = () => {
     startLoading();
     setShowAllCategories(!showAllCategories);
   };
-  
+
   const startLoading = () => {
     setLoading(true);
     setLoadingProgress(0);
   };
-  
+
   useEffect(() => {
     if (loading) {
       let start: number | null = null;
       let animationFrameId: number;
-      
+
       const animate = (timestamp: number) => {
         if (!start) start = timestamp;
         const elapsed = timestamp - start;
-        
+
         const progress = Math.min(100, Math.floor((elapsed / 400) * 100));
         setLoadingProgress(progress);
-        
+
         if (progress < 100) {
           animationFrameId = requestAnimationFrame(animate);
         } else {
-          // Small delay to show 100% before hiding
           setTimeout(() => setLoading(false), 100);
         }
       };
-      
+
       animationFrameId = requestAnimationFrame(animate);
-      
+
       return () => {
         cancelAnimationFrame(animationFrameId);
       };
     }
   }, [loading]);
-  
+
   useEffect(() => {
     if ((dataLoaded && filteredItems.length > 0) && loading && loadingProgress > 50) {
       setLoadingProgress(100);
       setTimeout(() => setLoading(false), 100);
     }
   }, [filteredItems, loading, loadingProgress, dataLoaded]);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (dataLoaded) {
@@ -179,7 +182,7 @@ function ItemGalleryPage() {
         setTimeout(() => setLoading(false), 100);
       }
     }, 500);
-    
+
     return () => clearTimeout(timer);
   }, [dataLoaded]);
 
@@ -187,13 +190,13 @@ function ItemGalleryPage() {
     try {
       const link = document.createElement('a');
       link.href = `/assets/items/${item.name}.webp`;
-      link.download = `${formatItemName(item.name)}.webp`; 
+      link.download = `${formatItemName(item.name)}.webp`;
       link.rel = 'noopener';
-      
+
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       console.log(`Download started for: ${formatItemName(item.name)}`);
     } catch (error) {
       console.error('Download failed:', error);
@@ -203,25 +206,67 @@ function ItemGalleryPage() {
   return (
     <div>
       <Navbar activeSection={activeSection} />
-      
+
       <div className="container page-content">
         <div className="itemgallery-header">
-          <h1 className="section-title">Item Gallery</h1>
-          
+          <h1 className="section-title">Lore Friendly Item Gallery</h1>
+          <div className="disclaimer">
+            <strong className="disclaimer-title">Disclaimer:</strong>
+            <p>
+              This image gallery is a community-driven project that aggregates visual assets from various open-source or public repositories. 
+              All images are credited where possible, with sources including but not limited to:
+            </p>
+            <ul className="source-list">
+              <li><a href="https://github.com/bitc0de/fivem-items-gallery" target="_blank" rel="noopener noreferrer">bitc0de/fivem-items-gallery</a></li>
+              <li><a href="https://github.com/McKleans-Scripts/mk-items" target="_blank" rel="noopener noreferrer">McKleans-Scripts/mk-items</a></li>
+              <li><a href="https://github.com/Griefa/gfa-items" target="_blank" rel="noopener noreferrer">Griefa/gfa-items</a></li>
+              <li><a href="https://github.com/TankieTwitch/FREE-FiveM-Image-Library" target="_blank" rel="noopener noreferrer">TankieTwitch/FREE-FiveM-Image-Library</a></li>
+              <li><a href="https://github.com/TankieTwitch/FREE-RedM-Image-Library" target="_blank" rel="noopener noreferrer">TankieTwitch/FREE-RedM-Image-Library</a></li>
+            </ul>
+            <p>
+              We do not claim ownership or licensing rights over these images unless explicitly stated. 
+              Images with unclear or missing license information will be marked as <strong>UNLICENSED</strong>. 
+              All rights remain with the original creators.
+            </p>
+            <p>
+              If you are a copyright holder and have concerns about attribution or usage, 
+              please <Link to="/#contact" className="contact-link">contact me</Link> for removal or correction.
+            </p>
+          </div>
+
+          <div className="license-legend-toggle">
+            <button onClick={() => setShowLicenseInfo(!showLicenseInfo)} className="license-info-button">
+              {showLicenseInfo ? 'Hide' : 'Show'} License Glossary
+            </button>
+
+            {showLicenseInfo && (
+              <div className="license-legend">
+                <h4>License Types</h4>
+                <ul>
+                  {Object.entries(licenseTypes).map(([code, description]) => (
+                    <li key={code}>
+                      <span className="license-code">{code}</span> - {description}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
           {loading && (
             <div className="loading-bar-container">
-              <div 
-                className="loading-bar" 
+              <div
+                className="loading-bar"
                 style={{ width: `${loadingProgress}%` }}
               ></div>
             </div>
           )}
-          
+
           {dataLoaded && (
             <div className="itemgallery-filters">
               <div className="category-filters">
                 {visibleCategories.map(category => (
-                  <button 
+                  <button
                     key={category}
                     className={`category-filter ${selectedCategories.includes(category) ? 'active' : ''}`}
                     onClick={() => toggleCategory(category)}
@@ -229,9 +274,9 @@ function ItemGalleryPage() {
                     {category.charAt(0).toUpperCase() + category.slice(1)}
                   </button>
                 ))}
-                
+
                 {allCategories.length > initialCategoryCount && (
-                  <button 
+                  <button
                     className="category-filter more-button"
                     onClick={handleToggleCategories}
                   >
@@ -239,11 +284,11 @@ function ItemGalleryPage() {
                   </button>
                 )}
               </div>
-              
+
               {selectedCategories.length > 0 && availableSideCategories.length > 0 && (
                 <div className="side-category-filters">
                   {availableSideCategories.map(category => (
-                    <button 
+                    <button
                       key={category}
                       className={`side-category-filter ${selectedSideCategories.includes(category) ? 'active' : ''}`}
                       onClick={() => toggleSideCategory(category)}
@@ -253,7 +298,7 @@ function ItemGalleryPage() {
                   ))}
                 </div>
               )}
-              
+
               <div className="search-container">
                 <input
                   type="text"
@@ -265,30 +310,33 @@ function ItemGalleryPage() {
             </div>
           )}
         </div>
-        
+
         {!dataLoaded && !loading && (
           <div className="loading-error">
             <p>Failed to load gallery data. Please try refreshing the page.</p>
           </div>
         )}
-        
+
         {dataLoaded && (
           <div className="itemgallery-grid">
             {filteredItems.length > 0 ? (
               filteredItems.map((item, index) => (
-                <div 
-                  className="item-card" 
-                  key={index} 
+                <div
+                  className="item-card"
+                  key={index}
                   onClick={() => handleItemDownload(item)}
                   title={`Click to download ${formatItemName(item.name)}`}
                 >
                   <div className="item-image-container">
-                    <img 
-                      src={`/assets/items/${item.name}.webp`} 
-                      alt={formatItemName(item.name)} 
-                      className="item-image" 
-                      loading="lazy" 
+                    <img
+                      src={`/assets/items/${item.name}.webp`}
+                      alt={formatItemName(item.name)}
+                      className="item-image"
+                      loading="lazy"
                     />
+                    <span className="license-badge">
+                      {item.license || 'UNL'}
+                    </span>
                   </div>
                   <div className="item-content">
                     <h3 className="item-name">{formatItemName(item.name)}</h3>
@@ -302,12 +350,12 @@ function ItemGalleryPage() {
             )}
           </div>
         )}
-        
+
         <div className="back-to-home">
           <Link to="/" className="back-link">← Back to Home</Link>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );

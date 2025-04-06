@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '@styles/App.css';
 import Footer from '@components/Footer';
 import Navbar from '@components/Navbar';
@@ -158,14 +158,14 @@ function App() {
                 
                 <div className="project-links">
                   {project.link && (
-                    <a 
-                      href={project.link} 
+                    <Link 
+                      to={project.link} 
                       className="project-link" 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >
                       {isGitHubUrl(project.link) ? 'View Code' : 'View Project'}
-                    </a>
+                    </Link>
                   )}
                 </div>
               </div>
